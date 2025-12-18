@@ -80,7 +80,7 @@
 
 ### 🚀 Deploy
 - [ ] GitHub Actions para scraper automático (opcional)
-- [ ] Deploy de demo en Streamlit Cloud
+- [x] Deploy de demo en Streamlit Cloud
 
 ---
 
