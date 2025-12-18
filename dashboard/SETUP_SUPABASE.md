@@ -7,14 +7,14 @@ Actualmente, la API key de Supabase en tu configuración parece estar incompleta
 ## 📋 Pasos para obtener las credenciales correctas:
 
 ### 1. Ve a tu proyecto en Supabase
-   - https://supabase.com/dashboard/project/yejubzjdsglfbzmqnnpm
+   - https://supabase.com/dashboard/project/YOUR_PROJECT_ID
 
 ### 2. Navega a "Project Settings" (⚙️ en el menú izquierdo)
 
 ### 3. Click en "API" en el menú lateral
 
 ### 4. Copia las credenciales:
-   - **Project URL**: `https://yejubzjdsglfbzmqnnpm.supabase.co`
+   - **Project URL**: `https://xxxxxxxxxxxxx.supabase.co`
    - **anon public key**: Será una key MUY LARGA que empieza con `eyJ...`
 
 ### 5. Actualiza el archivo `.streamlit/secrets.toml`
@@ -23,7 +23,7 @@ Reemplaza el contenido con:
 
 ```toml
 [supabase]
-url = "https://yejubzjdsglfbzmqnnpm.supabase.co"
+url = "https://xxxxxxxxxxxxx.supabase.co"
 key = "TU_ANON_KEY_COMPLETA_AQUI"  # <-- Debe ser MUY larga (200+ caracteres)
 ```
 

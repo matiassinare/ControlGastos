@@ -5,10 +5,10 @@
 ### 1️⃣ Configurar Base de Datos (5 min)
 
 1. **Ya tenés Supabase** ✅
-   - URL: `https://yejubzjdsglfbzmqnnpm.supabase.co`
+   - URL: `https://xxxxxxxxxxxxx.supabase.co`
 
 2. **Ejecutar el schema simplificado:**
-   - Ir a [SQL Editor de Supabase](https://supabase.com/dashboard/project/yejubzjdsglfbzmqnnpm/sql)
+   - Ir a [SQL Editor de Supabase](https://supabase.com/dashboard/project/YOUR_PROJECT_ID/sql)
    - Copiar el contenido de `database/schema_simple.sql`
    - Pegar y ejecutar (botón **Run**)
 
@@ -81,8 +81,8 @@ cat .streamlit/secrets.toml
 
 # Debe tener:
 # [supabase]
-# url = "https://yejubzjdsglfbzmqnnpm.supabase.co"
-# key = "sb_publishable_..."
+# url = "https://xxxxxxxxxxxxx.supabase.co"
+# key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxxxxxxxxxx"
 ```
 
 ## 💡 Diferencias vs Versión Anterior
