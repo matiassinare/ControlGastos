@@ -47,8 +47,7 @@ def show_manual_load():
             ),
             "descripcion": st.column_config.TextColumn(
                 "Descripción",
-                required=True,
-                placeholder="Ej: Supermercado"
+                required=True
             ),
             "monto": st.column_config.NumberColumn(
                 "Monto",
