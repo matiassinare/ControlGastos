@@ -16,7 +16,15 @@
       "Bash(taskkill:*)",
       "Bash(timeout:*)",
       "Bash(git reset:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(findstr:*)",
+      "Bash(git commit:*)",
+      "Bash(xargs -I {} sh -c 'git show :\"\"{}\"\" 2>/dev/null')",
+      "Bash(git rm:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)"
     ]
   }
 }
