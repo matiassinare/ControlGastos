@@ -1,0 +1,8 @@
+Para limpiar las cuotas propagadas y empezar de nuevo:
+
+1. Eliminá el archivo: cuotas_propagadas.json
+2. Volvé a importar el PDF en la página "Importar"
+3. Las cuotas se propagarán correctamente con los IDs
+
+O simplemente reemplazá el contenido de cuotas_propagadas.json con:
+[]

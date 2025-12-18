@@ -1,0 +1,21 @@
+# =========================================
+# EXPENSE TRACKER - DASHBOARD DEPENDENCIES
+# =========================================
+
+# Web framework
+streamlit>=1.29.0
+
+# Database client
+supabase>=2.3.0
+
+# Visualization
+plotly>=5.18.0
+
+# Data processing (sin versión fija para que use wheels precompilados)
+pandas>=2.0.0
+
+# Date/time utilities
+python-dateutil>=2.8.2
+
+# PDF Parsing
+pdfplumber>=0.10.0

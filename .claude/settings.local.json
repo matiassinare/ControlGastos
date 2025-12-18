@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(python3:*)",
+      "Bash(python -m playwright:*)",
+      "Bash(python banks/galicia_pdf_parser.py:*)",
+      "Bash(python run.py:*)",
+      "Bash(dir:*)",
+      "Bash(streamlit run:*)",
+      "Bash(pip install:*)",
+      "Bash(pip uninstall:*)",
+      "Bash(set:*)",
+      "Bash(python -m streamlit run:*)",
+      "Bash(python:*)",
+      "Bash(taskkill:*)",
+      "Bash(timeout:*)",
+      "Bash(git reset:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
