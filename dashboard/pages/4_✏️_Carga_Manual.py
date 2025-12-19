@@ -27,9 +27,9 @@ def show_manual_load():
     # Estructura inicial del DataFrame
     # Pre-llenamos con 3 filas vacías para invitar a la acción
     initial_data = [
-        {"fecha": default_date, "descripcion": "", "monto": 0.0, "categoria": "Otros", "moneda": currency},
-        {"fecha": default_date, "descripcion": "", "monto": 0.0, "categoria": "Otros", "moneda": currency},
-        {"fecha": default_date, "descripcion": "", "monto": 0.0, "categoria": "Otros", "moneda": currency},
+        {"fecha": default_date, "descripcion": "", "monto": 0.0, "categoria": "Otros", "moneda": currency, "recurrente": False},
+        {"fecha": default_date, "descripcion": "", "monto": 0.0, "categoria": "Otros", "moneda": currency, "recurrente": False},
+        {"fecha": default_date, "descripcion": "", "monto": 0.0, "categoria": "Otros", "moneda": currency, "recurrente": False},
     ]
     
     df = pd.DataFrame(initial_data)
@@ -70,6 +70,11 @@ def show_manual_load():
                 options=["ARS", "USD"],
                 required=True,
                 default=currency
+            ),
+            "recurrente": st.column_config.CheckboxColumn(
+                "Recurrente?",
+                help="Si se marca, se repite hasta fin del año siguiente",
+                default=False
             )
         },
         key="editor_gastos_manuales"
@@ -91,7 +96,7 @@ def show_manual_load():
                 monto = 0.0
                 
             if desc and monto > 0:
-                # Construir objeto gasto
+                # Construir objeto gasto base
                 fecha_obj = row['fecha']
                 if isinstance(fecha_obj, str):
                     try:
@@ -99,23 +104,66 @@ def show_manual_load():
                     except:
                         fecha_obj = date.today()
                 
-                # Period format: YYYY-MM
-                period = f"{fecha_obj.year}-{fecha_obj.month:02d}"
-
-                nuevo_gasto = {
-                    'id': str(uuid.uuid4()),
-                    'period': period,
-                    'date': fecha_obj, # Serialización se maneja en storage
-                    'description': desc,
-                    'amount': monto,
-                    'currency': row.get('moneda', 'ARS'),
-                    'category': row.get('categoria', 'Otros'),
-                    'pagado': False, # Default
-                    'tipo': 'manual'
-                }
+                es_recurrente = row.get('recurrente', False)
                 
-                storage.save_gasto_manual(nuevo_gasto)
-                count += 1
+                # Definir rango de periodos
+                year_start = fecha_obj.year
+                month_start = fecha_obj.month
+                
+                if es_recurrente:
+                    # Hasta diciembre del año siguiente
+                    end_year = year_start + 1
+                    end_month = 12
+                else:
+                    # Solo una vez
+                    end_year = year_start
+                    end_month = month_start
+
+                current_year = year_start
+                current_month = month_start
+                
+                while (current_year < end_year) or (current_year == end_year and current_month <= end_month):
+                    # Calcular fecha para este periodo (mismo día o fin de mes)
+                    # Simplificación: Usamos el día 1 o la misma fecha original si es posible, 
+                    # pero `period` es lo importante. `date` se usa para ordenar.
+                    
+                    try:
+                        fecha_actual = date(current_year, current_month, fecha_obj.day)
+                    except ValueError:
+                        # Si el día no existe (ej: 31 de feb), usar el último día del mes
+                        if current_month == 12:
+                             fecha_actual = date(current_year, current_month, 31)
+                        else:
+                             # Truco: día 1 del mes siguiente menos 1 día
+                             # Pero simple fallback: día 28
+                             fecha_actual = date(current_year, current_month, 28)
+
+                    period = f"{current_year}-{current_month:02d}"
+
+                    nuevo_gasto = {
+                        'id': str(uuid.uuid4()),
+                        'period': period,
+                        'date': fecha_actual, 
+                        'description': desc,
+                        'amount': monto,
+                        'currency': row.get('moneda', 'ARS'),
+                        'category': row.get('categoria', 'Otros'),
+                        'pagado': False, 
+                        'tipo': 'manual'
+                    }
+                    
+                    storage.save_gasto_manual(nuevo_gasto)
+                    count += 1
+                    
+                    # Avanzar mes
+                    current_month += 1
+                    if current_month > 12:
+                        current_month = 1
+                        current_year += 1
+                    
+                    # Romper loop si no es recurrente (redundante con condición while pero seguro)
+                    if not es_recurrente:
+                        break
         
         if count > 0:
             st.success(f"✅ Se guardaron {count} gastos correctamente.")
